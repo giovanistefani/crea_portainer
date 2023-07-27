@@ -2,7 +2,8 @@
 up() {
 
   echo "Starting Portainer..."
-  docker run -d -p 8000:8000 -p 9443:9443 --name info-manager \
+  docker volume create portainer_data
+  docker run -d -p 8000:8000 -p 9443:9443 --name crea-sc-manager \
   --restart=always \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v portainer_data:/data portainer/portainer-ce:latest &
@@ -10,7 +11,8 @@ up() {
 }
 
 down() {
-  
+  docker stop crea-sc-manager
+  docker rm crea-sc-manager
 }
 
 case $1 in
@@ -24,3 +26,5 @@ case $1 in
     echo "Usage: $0 {up|down}"
     ;;
 esac
+
+
